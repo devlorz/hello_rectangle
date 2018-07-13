@@ -5,8 +5,15 @@ import 'package:hello_rectangle/unit.dart';
 
 final _backgroundColor = Colors.green[100];
 
-class CategoryRoute extends StatelessWidget {
+class CategoryRoute extends StatefulWidget {
   const CategoryRoute();
+
+  @override
+  _CategoryRouteState createState() => _CategoryRouteState();
+}
+
+class _CategoryRouteState extends State<CategoryRoute> {
+  final _categories = <Category>[];
 
   static const _categoryNames = <String>[
     'Length',
@@ -30,12 +37,16 @@ class CategoryRoute extends StatelessWidget {
     Colors.red,
   ];
 
-  Widget _buildCategoryWidgets(List<Widget> categories) {
-    return ListView.builder(
-      itemBuilder: (BuildContext context, int index) => categories[index],
-      itemCount: categories.length,
-    );
-  }
+  static const _icons = [
+    Icons.cake,
+    Icons.calendar_today,
+    Icons.calendar_view_day,
+    Icons.call,
+    Icons.call_end,
+    Icons.call_made,
+    Icons.camera,
+    Icons.card_giftcard
+  ];
 
   List<Unit> _retrieveUnitList(String categoryName) {
     return List.generate(10, (int i) {
@@ -48,22 +59,31 @@ class CategoryRoute extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
-    final categories = <Category>[];
-
+  void initState() {
+    super.initState();
     for (var i = 0; i < _categoryNames.length; i++) {
-      categories.add(Category(
+      _categories.add(Category(
         name: _categoryNames[i],
         color: _baseColors[i],
-        iconLocation: Icons.cake,
+        iconLocation: _icons[i],
         units: _retrieveUnitList(_categoryNames[i]),
       ));
     }
+  }
 
+  Widget _buildCategoryWidgets(List<Widget> categories) {
+    return ListView.builder(
+      itemBuilder: (BuildContext context, int index) => categories[index],
+      itemCount: categories.length,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final listView = Container(
       color: _backgroundColor,
       padding: EdgeInsets.symmetric(horizontal: 8.0),
-      child: _buildCategoryWidgets(categories),
+      child: _buildCategoryWidgets(_categories),
     );
 
     final appBar = AppBar(
