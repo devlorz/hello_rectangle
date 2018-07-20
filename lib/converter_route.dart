@@ -3,6 +3,8 @@ import 'package:meta/meta.dart';
 
 import 'package:hello_rectangle/unit.dart';
 
+const _padding = EdgeInsets.all(16.0);
+
 class ConverterRoute extends StatefulWidget {
   final String name;
   final Color color;
