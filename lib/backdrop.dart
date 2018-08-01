@@ -148,6 +148,10 @@ class _BackdropState extends State<Backdrop>
             velocity:
                 _backdropPanelVisible ? -_kFlingVelocity : _kFlingVelocity);
       });
+    } else if (!_backdropPanelVisible) {
+      setState(() {
+        _controller.fling(velocity: _kFlingVelocity);
+      });
     }
   }
 
@@ -205,6 +209,7 @@ class _BackdropState extends State<Backdrop>
     Animation<RelativeRect> panelAnimation = RelativeRectTween(
       begin: RelativeRect.fromLTRB(
           0.0, panelTop, 0.0, panelTop - panelSize.height),
+      end: RelativeRect.fromLTRB(0.0, 0.0, 0.0, 0.0),
     ).animate(_controller.view);
 
     return Container(
